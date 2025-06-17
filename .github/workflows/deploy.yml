@@ -10,7 +10,7 @@ on:
     branches: [ main, master ]  # 支援 main 或 master 分支
     paths:
       - 'file/**'  # 當 file 目錄有變更時觸發
-      - 'generate_manifest.py'  # 當生成腳本有變更時觸發
+      - 'generate-manifest.py'  # 當生成腳本有變更時觸發
       - '.github/workflows/deploy.yml'  # 當工作流程檔案有變更時觸發
   workflow_dispatch:  # 允許手動觸發
 
