@@ -84,7 +84,7 @@ class FileDisplaySystem {
             // 轉換為數字再補零到三位數
             const id = parseInt(hash, 10);
             if (id < 0 || id > 9999) {
-                throw new Error('ID 必須在 0-999 範圍內');
+                throw new Error('ID 必須在 0-9999 範圍內');
             }
             
             const paddedId = id.toString().padStart(4, '0');
