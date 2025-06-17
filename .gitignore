@@ -1,0 +1,66 @@
+# Python 相關檔案
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虛擬環境
+venv/
+ENV/
+env/
+.venv/
+
+# IDE 和編輯器檔案
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系統檔案
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# 日誌檔案
+*.log
+logs/
+
+# 暫存檔案
+*.tmp
+*.temp
+.cache/
+
+# 備份檔案
+*.bak
+*.backup
+*~
+
+# 注意：manifest.json 不應該被忽略
+# 它是由 Python 腳本自動生成，需要被 Git 追蹤
+# 如果您想要手動管理，可以取消下面這行的註解
+# file/manifest.json

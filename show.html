@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>法規格式化輸出頁面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet" href="law-style.css" />
+    <style>
+        
+        #loading {
+            color: #666;
+            font-style: italic;
+        }
+        
+        #error {
+            color: #d32f2f;
+            background-color: #ffebee;
+            border: 1px solid #f8bbd9;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="output"></div>
+
+    <!-- 載入狀態顯示區域 -->
+    <div id="loading">正在載入法規...</div>
+    
+    <!-- 錯誤訊息顯示區域 -->
+    <div id="error" style="display: none;"></div>
+    
+    <!-- 文件內容顯示區域 -->
+    <div id="content" style="display: none;"></div>
+
+    <!-- 載入外部 JavaScript 檔案 -->
+    <!-- 注意：formatter.js 必須在 script.js 之前載入 -->
+    <script src="formatter.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

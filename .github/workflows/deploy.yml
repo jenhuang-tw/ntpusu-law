@@ -1,0 +1,158 @@
+# GitHub Actions 工作流程：自動生成清單並部署到 GitHub Pages
+# 檔案位置：.github/workflows/deploy.yml
+# 用途：當程式碼推送到主分支時，自動執行清單生成和網站部署
+
+name: 生成文件清單並部署到 GitHub Pages
+
+# 觸發條件：當推送到 main 分支或手動觸發時執行
+on:
+  push:
+    branches: [ main, master ]  # 支援 main 或 master 分支
+    paths:
+      - 'file/**'  # 當 file 目錄有變更時觸發
+      - 'generate_manifest.py'  # 當生成腳本有變更時觸發
+      - '.github/workflows/deploy.yml'  # 當工作流程檔案有變更時觸發
+  workflow_dispatch:  # 允許手動觸發
+
+# 設定工作流程權限
+permissions:
+  contents: write  # 允許寫入內容（提交變更）
+  pages: write     # 允許部署到 Pages
+  id-token: write  # 允許 OIDC 驗證
+
+# 工作流程任務
+jobs:
+  # 任務 1：生成清單檔案
+  generate-manifest:
+    name: 生成文件清單
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 步驟 1：檢出程式碼
+    - name: 檢出程式碼
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 取得完整的 Git 歷史記錄
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    # 步驟 2：設定 Python 環境
+    - name: 設定 Python 環境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # 使用 Python 3.9
+    
+    # 步驟 3：檢查 file 目錄是否存在
+    - name: 檢查 file 目錄
+      run: |
+        echo "檢查 file 目錄是否存在..."
+        if [ ! -d "file" ]; then
+          echo "警告：file 目錄不存在，將建立空目錄"
+          mkdir -p file
+        else
+          echo "file 目錄存在，內容如下："
+          ls -la file/
+        fi
+    
+    # 步驟 4：執行清單生成腳本
+    - name: 執行清單生成腳本
+      run: |
+        echo "開始執行文件清單生成..."
+        python generate_manifest.py
+        
+        echo "檢查生成結果..."
+        if [ -f "file/manifest.json" ]; then
+          echo "✅ manifest.json 生成成功"
+          echo "檔案內容："
+          cat file/manifest.json
+        else
+          echo "❌ manifest.json 生成失敗"
+          exit 1
+        fi
+    
+    # 步驟 5：檢查是否有變更需要提交
+    - name: 檢查變更
+      id: check-changes
+      run: |
+        echo "檢查是否有檔案變更..."
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # 檢查是否有變更
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "沒有檔案變更，跳過提交步驟"
+          echo "changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "發現檔案變更，準備提交"
+          echo "changes=true" >> $GITHUB_OUTPUT
+          git status
+        fi
+    
+    # 步驟 6：提交變更（只有在有變更時執行）
+    - name: 提交變更
+      if: steps.check-changes.outputs.changes == 'true'
+      run: |
+        echo "提交 manifest.json 變更..."
+        git add file/manifest.json
+        git commit -m "🤖 自動更新文件清單 (manifest.json)
+        
+        - 由 GitHub Actions 自動生成
+        - 提交時間: $(date +'%Y-%m-%d %H:%M:%S')
+        - 觸發分支: ${{ github.ref_name }}
+        - 提交雜湊: ${{ github.sha }}"
+    
+    # 步驟 7：推送變更（只有在有變更時執行）
+    - name: 推送變更
+      if: steps.check-changes.outputs.changes == 'true'
+      run: |
+        echo "推送變更到遠端儲存庫..."
+        git push origin ${{ github.ref_name }}
+        echo "✅ 變更推送完成"
+    
+    # 步驟 8：上傳構建產物（用於部署）
+    - name: 上傳頁面構建產物
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: .  # 上傳整個專案目錄
+
+  # 任務 2：部署到 GitHub Pages
+  deploy:
+    name: 部署到 GitHub Pages
+    needs: generate-manifest  # 依賴於清單生成任務
+    runs-on: ubuntu-latest
+    
+    # 設定 GitHub Pages 環境
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+    # 步驟 1：部署到 GitHub Pages
+    - name: 部署到 GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
+      with:
+        # 使用前一個任務上傳的構建產物
+        artifact_name: github-pages
+
+# 工作流程完成後的清理和通知
+# 注意：以下步驟可依需求啟用
+
+# 可選：Slack 通知（需要設定 SLACK_WEBHOOK secret）
+# notify:
+#   name: 通知部署結果
+#   needs: [generate-manifest, deploy]
+#   runs-on: ubuntu-latest
+#   if: always()  # 無論成功或失敗都執行
+#   
+#   steps:
+#   - name: 發送 Slack 通知
+#     if: ${{ secrets.SLACK_WEBHOOK }}
+#     uses: 8398a7/action-slack@v3
+#     with:
+#       status: ${{ job.status }}
+#       text: |
+#         網站部署完成！
+#         狀態: ${{ job.status }}
+#         網址: ${{ needs.deploy.outputs.page_url }}
+#     env:
+#       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
