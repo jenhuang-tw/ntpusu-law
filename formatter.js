@@ -186,9 +186,6 @@ function formatter(fileText) {
                 dateStr = `${year}年${parseInt(month)}月${parseInt(day)}日`;
             }
 			
-			
-			
-			
             outputFront += '<span style="font-weight: bold;'+isAbandonedColor+'">' +`${metadata.modifiedType}日期：</span>${dateStr}`;
         }
         
@@ -207,7 +204,7 @@ function formatter(fileText) {
     historyHtml += '</div>';
     
     // 組合最終 HTML
-    const outputHtml = outputFront + outputContent + '</div> <!-- end regulation content -->' + historyHtml;
+    const outputHtml = outputFront+ '<pre>' + outputContent + '</pre>' + '</div> <!-- end regulation content -->' + historyHtml;
     
     return outputHtml;
 }
