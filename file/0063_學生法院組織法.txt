@@ -1,8 +1,8 @@
 ---
-titleFull: 國立臺北大學學生法庭組織辦法
-titleShort: 學生法庭組織辦法
+titleFull: 國立臺北大學學生法院組織法
+titleShort: 學生法院組織法
 modifiedType: 修正
-modifiedDate: 2024-01-12
+modifiedDate: 2024-04-11
 status: active
 history:
  - 95學年度收錄於第六屆學生議會《學生自治會法規彙編》。（<a href="https://github.com/jenhuang-tw/ntpusu-law/blob/c7e6cb91f13f7f323954b8f714b07b3a03d99b2f/file/0063_%E5%AD%B8%E7%94%9F%E6%B3%95%E9%99%A2%E7%B5%84%E7%B9%94%E6%B3%95.txt" target="_blank">瀏覽歷史版本</a>）
