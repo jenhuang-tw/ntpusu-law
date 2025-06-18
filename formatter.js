@@ -73,6 +73,7 @@ function formatter(fileText) {
      */
     function handleContentLine(line) {
         let toReturn = '';
+		console.log("「",line,"」現已進入 handleContentLine 函式處理。");
         
         // 行首全形空格取代為臨時佔位符「⊕」
         if (line.startsWith('　')) {
@@ -205,7 +206,7 @@ function formatter(fileText) {
     historyHtml += '</div>';
     
     // 組合最終 HTML
-    const outputHtml = outputFront+ outputContent +  '</div> <!-- end regulation content -->' + historyHtml;
+    const outputHtml = '<pre>' + outputFront+ outputContent +  '</div> <!-- end regulation content -->' + historyHtml + '</pre>';
     
     return outputHtml;
 }
