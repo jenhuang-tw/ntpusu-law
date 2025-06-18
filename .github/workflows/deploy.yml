@@ -14,17 +14,24 @@ on:
       - '.github/workflows/deploy.yml'  # 當工作流程檔案有變更時觸發
   workflow_dispatch:  # 允許手動觸發
 
-# 設定工作流程權限
+# 設定工作流程權限 - 重要：確保所有必要權限都已設定
 permissions:
-  contents: write  # 允許寫入內容（提交變更）
-  pages: write     # 允許部署到 Pages
-  id-token: write  # 允許 OIDC 驗證
+  contents: write      # 允許寫入內容（提交變更）
+  pages: write         # 允許部署到 Pages
+  id-token: write      # 允許 OIDC 驗證
+  actions: read        # 允許讀取 Actions 資訊
+  deployments: write   # 允許建立部署
+
+# 設定並發控制，避免同時部署造成衝突
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 # 工作流程任務
 jobs:
-  # 任務 1：生成清單檔案
-  generate-manifest:
-    name: 生成文件清單
+  # 任務 1：生成清單並構建
+  build:
+    name: 生成文件清單並構建
     runs-on: ubuntu-latest
     
     steps:
@@ -108,7 +115,11 @@ jobs:
         git push origin ${{ github.ref_name }}
         echo "✅ 變更推送完成"
     
-    # 步驟 8：上傳構建產物（用於部署）
+    # 步驟 8：設定 GitHub Pages 配置
+    - name: 設定 Pages 配置
+      uses: actions/configure-pages@v4
+    
+    # 步驟 9：上傳構建產物（用於部署）
     - name: 上傳頁面構建產物
       uses: actions/upload-pages-artifact@v3
       with:
@@ -117,7 +128,7 @@ jobs:
   # 任務 2：部署到 GitHub Pages
   deploy:
     name: 部署到 GitHub Pages
-    needs: generate-manifest  # 依賴於清單生成任務
+    needs: build  # 依賴於構建任務
     runs-on: ubuntu-latest
     
     # 設定 GitHub Pages 環境
@@ -129,30 +140,4 @@ jobs:
     # 步驟 1：部署到 GitHub Pages
     - name: 部署到 GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2
-      with:
-        # 使用前一個任務上傳的構建產物
-        artifact_name: github-pages
-
-# 工作流程完成後的清理和通知
-# 注意：以下步驟可依需求啟用
-
-# 可選：Slack 通知（需要設定 SLACK_WEBHOOK secret）
-# notify:
-#   name: 通知部署結果
-#   needs: [generate-manifest, deploy]
-#   runs-on: ubuntu-latest
-#   if: always()  # 無論成功或失敗都執行
-#   
-#   steps:
-#   - name: 發送 Slack 通知
-#     if: ${{ secrets.SLACK_WEBHOOK }}
-#     uses: 8398a7/action-slack@v3
-#     with:
-#       status: ${{ job.status }}
-#       text: |
-#         網站部署完成！
-#         狀態: ${{ job.status }}
-#         網址: ${{ needs.deploy.outputs.page_url }}
-#     env:
-#       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      uses: actions/deploy-pages@v4  # 使用最新版本
