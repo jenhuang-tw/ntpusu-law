@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-文件清單生成器
+法規清單生成器
 掃描 file/ 目錄中的所有 .txt 檔案，並生成 manifest.json 清單檔案
-
-作者: 法律系學生專案
-用途: 靜態網站文件管理系統
 """
 
 import os
@@ -114,7 +111,7 @@ class ManifestGenerator:
     def validate_filename_format(self, filename: str) -> bool:
         """
         驗證檔案名稱格式是否符合預期（可選的格式檢查）
-        預期格式：XXX_*.txt，其中 XXX 是三位數字
+        預期格式：XXXX_*.txt，其中 XXXX 是4位數字
         
         Args:
             filename (str): 要驗證的檔案名稱
@@ -134,7 +131,7 @@ class ManifestGenerator:
             prefix = name_without_ext.split('_')[0]
             
             # 檢查是否為三位數字
-            if len(prefix) == 3 and prefix.isdigit():
+            if len(prefix) == 4 and prefix.isdigit():
                 return True
             
             return False
@@ -160,7 +157,7 @@ class ManifestGenerator:
                     invalid_format_files.append(filename)
             
             if invalid_format_files:
-                logger.warning("以下檔案名稱格式可能不符合預期（XXX_*.txt）：")
+                logger.warning("以下檔案名稱格式可能不符合預期（XXXX_*.txt）：")
                 for filename in invalid_format_files:
                     logger.warning(f"  - {filename}")
                 logger.warning("這些檔案仍會被包含在清單中，但可能無法正確顯示")
