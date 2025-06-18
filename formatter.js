@@ -158,6 +158,7 @@ function formatter(fileText) {
             i = handleMetadataLine(line, i);
         } else if (isInContent) {
             outputContent += handleContentLine(line);
+			console.log("outputContent += ", outputContent);
         }
     }
     
@@ -204,7 +205,7 @@ function formatter(fileText) {
     historyHtml += '</div>';
     
     // 組合最終 HTML
-    const outputHtml = outputFront+ '<pre>' + outputContent + '</pre>' + '</div> <!-- end regulation content -->' + historyHtml;
+    const outputHtml = outputFront+ outputContent +  '</div> <!-- end regulation content -->' + historyHtml;
     
     return outputHtml;
 }
