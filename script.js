@@ -277,7 +277,7 @@ class FileDisplaySystem {
             // 設定內容和檔案資訊
             this.contentElement.innerHTML = `
                 <div style="color: #666; font-size: 0.9em; margin-bottom: 10px; font-family: Arial, sans-serif;">
-                    📄 檔案: ${filename}
+                    Regulation ID: ${paddedId}
                 </div>
                 <div>${content}</div>
             `;
