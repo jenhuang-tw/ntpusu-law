@@ -110,7 +110,7 @@ jobs:
     
     # 步驟 8：上傳構建產物（用於部署）
     - name: 上傳頁面構建產物
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
       with:
         path: .  # 上傳整個專案目錄
 
@@ -147,7 +147,7 @@ jobs:
 #   steps:
 #   - name: 發送 Slack 通知
 #     if: ${{ secrets.SLACK_WEBHOOK }}
-#     uses: 8398a7/action-slack@v4
+#     uses: 8398a7/action-slack@v3
 #     with:
 #       status: ${{ job.status }}
 #       text: |
