@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺北大學學生會法規彙編 | NTPU Student Government Legal Compilation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-color: #f59e0b;
+            --text-color: #1f2937;
+            --bg-color: #ffffff;
+            --card-bg: #f8fafc;
+            --border-color: #e5e7eb;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #fbbf24;
+            --text-color: #f9fafb;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            border-bottom: 3px solid var(--accent-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 50px;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+            color: white;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .main-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .law-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .law-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .law-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .law-link {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .law-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .law-link i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .info-section {
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-color);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #dc2626;
+        }
+
+        [data-theme="dark"] .error-message {
+            background-color: #7f1d1d;
+            color: #fecaca;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .main-card {
+                padding: 20px;
+            }
+            
+            .law-link {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="https://ntpusu.org">
+                <i class="fas fa-balance-scale me-2"></i>
+                NTPU Student Union
+            </a>
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="hero-title">臺北大學學生會法規彙編</h1>
+            <p class="hero-subtitle">NTPU Student Union Legal Compilation</p>
+            <p class="hero-description">
+                學生自治法規查詢系統 | Student Self-Government Legal Reference System
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Information Section -->
+        <div class="info-section">
+            <h5><i class="fas fa-info-circle me-2"></i>關於本系統 | About This System</h5>
+            <p class="mb-2">
+                本系統收錄臺北大學學生會相關法規文件，提供便捷的線上查詢服務。
+            </p>
+            <p class="mb-0">
+                This system contains legal documents related to NTPU Student Union, providing convenient online reference services.
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-card">
+            <h2 class="section-title">
+                <i class="fas fa-book-open me-2"></i>
+                法規清單 | Legal Documents
+            </h2>
+            
+            <!-- Loading State -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p class="mt-3">載入法規清單中... | Loading legal documents...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="error-message d-none">
+                <h6><i class="fas fa-exclamation-triangle me-2"></i>載入錯誤 | Loading Error</h6>
+                <p class="mb-0">無法載入法規清單，請檢查檔案路徑或稍後再試。| Unable to load legal documents. Please check the file path or try again later.</p>
+            </div>
+
+            <!-- Law List -->
+            <ul id="lawList" class="law-list d-none">
+                <!-- Laws will be dynamically loaded here -->
+            </ul>
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="main-card">
+            <h3 class="section-title">
+                <i class="fas fa-question-circle me-2"></i>
+                使用說明 | Usage Instructions
+            </h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-mouse-pointer me-2 text-warning"></i>如何使用 | How to Use</h5>
+                    <ul>
+                        <li>點擊法規名稱即可開啟完整內容</li>
+                        <li>支援桌機、平板及手機瀏覽</li>
+                        <li>首頁可切換日間/夜間模式</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5><i class="fas fa-lightbulb me-2 text-warning"></i>Features</h5>
+                    <ul>
+                        <li>Click on regulation names to view full content</li>
+                        <li>Responsive design for all devices</li>
+                        <li>Day/Night mode toggle available on homepage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-2">
+                <strong>臺北大學學生會法規彙編</strong> | 
+                <strong>NTPU Student Union Legal Compilation</strong>
+            </p>
+            <p class="mb-0">
+                <i class="fas fa-copyright me-1"></i>
+                National Taipei University Student Union
+            </p>
+            <p class="mb-0">
+                <a href="https://ntpusu.org">
+					https://ntpusu.org
+				</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Management
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // Load and display law list
+        async function loadLawList() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const lawList = document.getElementById('lawList');
+
+            try {
+                // Fetch manifest.json
+                const response = await fetch('file/manifest.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const laws = await response.json();
+                
+                // Hide loading
+                loading.classList.add('d-none');
+                
+                // Generate law list HTML
+                if (laws && laws.length > 0) {
+                    const lawListHTML = laws.map(filename => {
+                        // Extract number and name from filename
+                        const match = filename.match(/^(\d+)_(.+)\.txt$/);
+                        if (match) {
+                            const number = match[1];
+                            const name = match[2];
+                            return `
+                                <li class="law-item">
+                                    <a href="show.html#${number}" target="_blank" class="law-link">
+                                        <i class="fas fa-file-alt"></i>
+                                        ${number}. ${name}
+                                    </a>
+                                </li>
+                            `;
+                        }
+                        return '';
+                    }).join('');
+                    
+                    lawList.innerHTML = lawListHTML;
+                    lawList.classList.remove('d-none');
+                } else {
+                    throw new Error('No laws found in manifest');
+                }
+                
+            } catch (err) {
+                console.error('Error loading law list:', err);
+                loading.classList.add('d-none');
+                error.classList.remove('d-none');
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            loadLawList();
+        });
+    </script>
+</body>
+</html>
