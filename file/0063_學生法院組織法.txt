@@ -2,12 +2,14 @@
 titleFull: 國立臺北大學學生法庭組織辦法
 titleShort: 學生法庭組織辦法
 modifiedType: 修正
-modifiedDate: 2023-12-27
+modifiedDate: 2024-01-12
 status: active
 history:
  - 95學年度收錄於第六屆學生議會《學生自治會法規彙編》。（<a href="https://github.com/jenhuang-tw/ntpusu-law/blob/c7e6cb91f13f7f323954b8f714b07b3a03d99b2f/file/0063_%E5%AD%B8%E7%94%9F%E6%B3%95%E9%99%A2%E7%B5%84%E7%B9%94%E6%B3%95.txt" target="_blank">瀏覽歷史版本</a>）
  - 112年5月21日自三峽校區學生議會網站法規資料庫匯入學生法庭網站。（<a href="https://github.com/jenhuang-tw/ntpusu-law/blob/b0662c026c12d220429350ab64f85094b145a43f/file/0063_%E5%AD%B8%E7%94%9F%E6%B3%95%E9%99%A2%E7%B5%84%E7%B9%94%E6%B3%95.txt" target="_blank">瀏覽歷史版本</a>）
- - 112年12月7日三峽校區學生議會第24屆第4次常會通過、12月17日臺北校區學生議會第7屆第6次臨時會通過，12月27日總會長公布（總令字第1121227001號令），修正公布第6、7、9條條文。（<a href="https://drive.google.com/open?id=1wfkUUzFfQhawULhmbiTv0-0y9hlGYabx" target="_blank" rel="noreferrer noopener">學生法庭提案說明</a>、<a href="https://sites.google.com/view/ntpuscs/%E7%AC%AC24%E5%B1%86%E7%AC%AC4%E6%AC%A1%E5%B8%B8%E6%9C%83" target="_blank" rel="noreferrer noopener">三峽議會審議記錄</a>）
+ - 112年12月7日三峽校區學生議會第24屆第4次常會通過、12月17日臺北校區學生議會第7屆第6次臨時會通過，12月27日總會長公布（總令字第1121227001號令），修正公布第6、7、9條條文。（<a href="https://drive.google.com/open?id=1wfkUUzFfQhawULhmbiTv0-0y9hlGYabx" target="_blank" rel="noreferrer noopener">學生法庭提案說明</a>、<a href="https://sites.google.com/view/ntpuscs/%E7%AC%AC24%E5%B1%86%E7%AC%AC4%E6%AC%A1%E5%B8%B8%E6%9C%83" target="_blank" rel="noreferrer noopener">三峽議會審議記錄</a>；<a href="https://github.com/jenhuang-tw/ntpusu-law/blob/919978301c0bc204dff51766cbcb7e4244af0f2a/file/0063_%E5%AD%B8%E7%94%9F%E6%B3%95%E9%99%A2%E7%B5%84%E7%B9%94%E6%B3%95.txt" target="_blank">瀏覽歷史版本</a>）
+ - 113年1月4日三峽校區學生議會第24屆第5次常會通過、1月10日臺北校區學生議會第7屆第4次常會通過，1月12日總會長公布（總令字第1130112003號令），增訂第4條之1條文。（<a href="https://drive.google.com/file/d/1TMc7G5IDoA4vF4urXrm2b7oyNrXyG5ql/view?usp=sharing" target="_blank" rel="noreferrer noopener">學生法庭提案說明</a>、<a href="https://sites.google.com/view/ntpuscs/%E7%AC%AC24%E5%B1%86%E7%AC%AC5%E6%AC%A1%E5%B8%B8%E6%9C%83" target="_blank" rel="noreferrer noopener">三峽議會審議紀錄</a>）
+ 
 ---
 第1條
 　本辦法依「國立臺北大學學生自治會組織章程」第六十四條制訂之。
@@ -31,6 +33,12 @@ history:
 　學生法官之辭職，應提出書面辭呈並具明理由，送達員任命之學生會會長後生效。
 　學生法官若有出缺，學生會長必須於一個月內向學生議會提名新任法官人選。
 　學生法庭顧問非有第二項第二款至第四款或喪失本校專任、兼任教職，不得解職。
+第4條之1
+　學生法官應依據國立臺北大學學生自治會組織章程及學生自治法規，本於良心，超然、獨立、公正審判，不受任何干涉。
+　學生法官為強化自律功能，應就自律事項、審議程序、決議之作成及處分種類等有關事項，訂定學生法官自律實施辦法。
+　前項辦法經學生法官現有總額三分之二以上之出席及出席人數三分之二以上之決議訂定之；修正時亦同。
+第5條
+（刪除）
 第6條
 　學生法庭首席學生法官如缺位時，學生法官互推一名代理主席，代行其職權，並於一個月內重新互選之。
 　首席學生法官因故不能視事時，準用缺位代行職權之規定。
