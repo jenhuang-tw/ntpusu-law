@@ -57,7 +57,7 @@ jobs:
     - name: 執行清單生成腳本
       run: |
         echo "開始執行文件清單生成..."
-        python generate_manifest.py
+        python generate-manifest.py
         
         echo "檢查生成結果..."
         if [ -f "file/manifest.json" ]; then
