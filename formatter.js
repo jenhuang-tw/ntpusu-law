@@ -1,10 +1,40 @@
 /**
  * 法規文本格式化處理
  * 
- * 功能：將純文本內容轉換為格式化的 HTML
- * 用途：配合文件顯示系統使用
+ * 功能：將法規檔案的純文本內容，轉換為格式化的 HTML
+ * 用途：配合學生自治會網站使用
  * 
  */
+ 
+
+// 處理 metadata 欄位（支援陣列格式）
+function handleMetadataLine(line, index) {
+	
+			  
+	const match = line.match(/^(\w+):\s*(.*)$/);
+	if (match) {
+		const key = match[1];
+		const value = match[2];
+		if (value === '') {
+				  // 準備擷取 YAML-style 陣列（如 history:）
+				  const list = [];
+				  i++;
+				  while (i < lines.length && lines[i].trim().startsWith('-')) {
+					list.push(lines[i].replace(/^-/, '').trim());
+					i++;
+				  }
+				  i--; // 修正 for loop index
+				  metadata[key] = list;
+		} else {
+				  metadata[key] = value;
+		}
+	}
+	
+}
+
+
+
+ 
 
 /**
  * 主要的文本格式化函式
@@ -13,46 +43,133 @@
  * @returns {string} 格式化後的 HTML 內容
  * 
  * 這個函式會被 script.js 中的 FileDisplaySystem 呼叫
- * 您可以在這裡實作任何自訂的格式化邏輯
+ * The div class name "jfpc" means "just-for-paragraph-count"
+ */
+ 
+function formatter(fileText, handleMetadataLine, handleContentLine) {
+  
+  let outputFront = '<div id="lawFront">\n';
+  let outputContent = '<div class="regulation-content">\n';
+  
+  if(fileText !== null && fileText !== '') {
+	  const lines = fileText.split(/\r?\n/);
+	  let isInMetadata = false;
+	  let isInContent = false;
+
+	  for (let i = 0; i < lines.length; i++) {
+		const line = lines[i];
+
+		if (line.trim() === '---') {
+		  if (!isInMetadata && !isInContent) {
+			// 開始 metadata 區塊
+			isInMetadata = true;
+			continue;
+		  } else if (isInMetadata) {
+			// metadata 區塊結束，開始 content
+			isInMetadata = false;
+			isInContent = true;
+			continue;
+		  }
+		}
+
+		if (isInMetadata) {
+		  handleMetadataLine(line, i);
+		} else if (isInContent) {
+		  handleContentLine(line, i);
+		}
+	  }
+  }
+  else {
+	console.warn('警告：傳入 formatter() 之 fileText 為 NULL 或空值。');
+  }
+  
+  const outputHtml = outputFront + '</div>\n' + outputContent + '</div>\n';
+  return outputHtml;
+  
+}
+
+
+/**
+ * 主要的文本格式化函式
+ * 
+ * @param {string} fileText - 原始文本內容
+ * @returns {string} 格式化後的 HTML 內容
+ * 
+ * 這個函式會被 script.js 中的 FileDisplaySystem 呼叫
+ * The div class name "jfpc" means "just-for-paragraph-count"
  */
 
-function formatLaw(fileText) {
+function formatter(fileText) {
     
 	if(fileText !== null && fileText !== '') {
 		
-	}
-	else {
-		console.log("傳入 formatter.js 之 fileText 為空。");
-	}
-	
-	
-	// 法規標題、最近異動日期、詳細沿革
-	
-	const inputTitle = document.getElementById('lawTitleInput').value;
-	const inputLastModified = document.getElementById('lawLMInput').value;
-    document.getElementById('lawTitlePrint').innerHTML = inputTitle;
-    document.getElementById('lawLMPrint').innerHTML = inputLastModified;
-	
-	const inputHist = document.getElementById('lawHistoryInput').value;
-	let outputHist = '<!-- History --> <div class="ts-header">沿革</div><div class="ts-content"><div class="ts-list is-ordered">\n';
-	if(inputHist !== null && inputHist !== '') {
-		const histLines = inputHist.split('\n');
-		histLines.forEach(histLine => {
-			outputHist += `\t<div class="item">\n\t\t${histLine}\n\t</div>\n`;
-		});
-	}
-	outputHist += '</div></div> <!-- end history --> \n';
-	document.getElementById('lawHistoryPreview').innerHTML = outputHist;
-    
-	// 法規內容
-	// the div class name "jfpc" means "just-for-paragraph-count"
-	
-	const inputText = document.getElementById('lawTextInput').value;
-    const lines = inputText.split('\n');
-    let outputHtml = '<div class="regulation-content">\n';
-    let inTiao = false;
+		const lines = fileText.split('\n');
+		
+		const metadata = {};
+		let inMetadata = true;
+		
+		let outputHtml = '<div class="regulation-content">\n';
+		let inTiao = false;
+		
+		// 逐行處理 開始
+		lines.forEach(line => {
+			
+			/**
+			 *
+			 * 處理 metadata
+			 *
+			 */
+			
+			// 判斷是否結束 metadata（出現 "---"）
+			if (line.trim() === '---') {
+			  if (i !== 0) {
+				// 第二個 ---，代表 metadata 區段結束
+				inMetadata = false;
+				continue;
+			  } else {
+				// 第一個 --- 開始 metadata
+				continue;
+			  }
+			}
 
-    lines.forEach(line => {
+			if (inMetadata) {
+			  // 處理 metadata 欄位（支援陣列格式）
+			  const match = line.match(/^(\w+):\s*(.*)$/);
+			  if (match) {
+				const key = match[1];
+				const value = match[2];
+				if (value === '') {
+				  // 準備擷取 YAML-style 陣列（如 history:）
+				  const list = [];
+				  i++;
+				  while (i < lines.length && lines[i].trim().startsWith('-')) {
+					list.push(lines[i].replace(/^-/, '').trim());
+					i++;
+				  }
+				  i--; // 修正 for loop index
+				  metadata[key] = list;
+				} else {
+				  metadata[key] = value;
+				}
+			  }
+			} else {
+			  contentLines.push(line);
+			}
+			
+			/**
+			 *
+			 * 處理 metadata
+			 *
+			 */
+		
+
+	
+	
+
+    
+
+	
+
         
 		// Checking for a full-width space
 		if (line.startsWith('　')) {  
@@ -109,12 +226,19 @@ function formatLaw(fileText) {
         else {
             outputHtml += `\t\t${line}\n`;
         }
-    }); //end foreach line
+    }); //逐行處理 結束
 
     if (inTiao) {
         outputHtml += '\t</div>\n\t<!--end single article-->\n';
     }
 	
     outputHtml += '</div> <!-- end regulation content --> \n';
-	return outputHtml;
+	// return outputHtml;
+	
+	
+			return outputHtml;
+	}
+	else {
+		console.warn('警告：傳入 formatter.js 之 fileText 為 NULL 或空值。');
+	}
 }
