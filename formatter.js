@@ -159,7 +159,7 @@ function formatter(fileText) {
             i = handleMetadataLine(line, i);
         } else if (isInContent) {
             outputContent += handleContentLine(line);
-			console.log("outputContent += ", outputContent);
+			console.log("outputContent += ", handleContentLine(line) );
         }
     }
     
@@ -206,7 +206,19 @@ function formatter(fileText) {
     historyHtml += '</div>';
     
     // 組合最終 HTML
-    const outputHtml = '<pre>' + outputFront+ outputContent +  '</div> <!-- end regulation content -->' + historyHtml + '</pre>';
+    const outputHtml = '' + outputFront+ outputContent +  '</div> <!-- end regulation content -->' + historyHtml + '';
+	
+//測試用程式碼	
+const outputHtml_Test = outputContent +  '</div>';	
+const textarea = document.createElement("textarea");
+textarea.rows = 5;
+textarea.cols = 15;
+textarea.readOnly = true;
+textarea.textContent = outputHtml_Test; // 自動處理特殊字元
+const output = document.getElementById("output");
+output.innerHTML = ""; // 清空原內容
+output.appendChild(textarea);
+	
     
     return outputHtml;
 }
