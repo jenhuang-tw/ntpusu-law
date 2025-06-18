@@ -275,9 +275,11 @@ class FileDisplaySystem {
         
         if (this.contentElement) {
             // 設定內容和檔案資訊
-            this.contentElement.innerHTML = `
+            const id2 = window.location.hash.substring(1);
+			
+			this.contentElement.innerHTML = `
                 <div style="color: #666; font-size: 0.9em; margin-bottom: 10px; font-family: Arial, sans-serif;">
-                    Regulation ID: ${paddedId}
+                    Regulation ID: ${id2}
                 </div>
                 <div>${content}</div>
             `;
